@@ -1,14 +1,10 @@
 import React, { Component } from "react";
-// import { render, screen } from '@testing-library/react';
 import App from "./App";
-import { mount, shallow, ReactWrapper, ShallowWrapper } from "enzyme";
+import { mount, ReactWrapper } from "enzyme";
 
 describe("App UI", () => {
   let component: ReactWrapper<any, Readonly<{}>, Component<{}, {}, any>>;
-  // const setState = jest.fn();
-  // const useStateSpy = jest.spyOn(React, "useState");
-  // useStateSpy.mockImplementation((init: any) => [init, setState]);
-  // let component: ShallowWrapper<any, Readonly<{}>, Component<{}, {}, any>>;
+
   beforeEach(() => {
     // component = shallow(<App />);
     component = mount(<App />);
