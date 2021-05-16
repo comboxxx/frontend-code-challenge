@@ -1,30 +1,45 @@
-import { TOrderBookStream } from './order-book-stream'
+import { TCoinCurrentPrice, TOrder } from "./order-book-stream";
+import { Container, Divider } from "./shared/styles/OrderBook.style";
+import CoinHeader from "./shared/components/OrderBook/CoinHeader";
+import React from "react";
+import CurrentPriceCard from "./shared/components/OrderBook/CurrentPriceCard";
+import OrderBookTable from "./shared/components/OrderBook/OrderBookTable";
+import BuyAndSellBottomButtons from "./shared/components/OrderBook/BuyAndSellBottomButtons";
+import { TCoinHeader } from "./shared/models/CoinInfo";
+import { TSetModalVisible } from "./shared/models/ModalModel";
 
-const OrderBook: React.FC<TOrderBookStream> = ({ buy, sell }) => {
-
+type OrderBookPageData = {
+  buy: TOrder[];
+  sell: TOrder[];
+  currentPrice: TCoinCurrentPrice;
+  openOrderModal: TSetModalVisible;
+} & TCoinHeader &
+  React.HTMLAttributes<HTMLDivElement>;
+const OrderBook: React.FC<OrderBookPageData> = ({
+  buy,
+  sell,
+  currentPrice,
+  openOrderModal,
+  coinName,
+  coinAbbreviations,
+  logo,
+}) => {
   return (
     <div>
-      <div>
-        Buy
-        <div>Price / Amount</div>
-        {buy.map((buyOrder) => (
-          <div>
-            {buyOrder.price} {buyOrder.amount}
-          </div>
-        ))}
-      </div>
+      <Container>
+        <CoinHeader
+          coinName={coinName}
+          coinAbbreviations={coinAbbreviations}
+          logo={logo}
+        />
+        <Divider />
+        <CurrentPriceCard {...currentPrice} />
+        <OrderBookTable buy={buy} sell={sell} />
+      </Container>
 
-			<div>
-        Sell
-        <div>Price / Amount</div>
-        {sell.map((sellOrder) => (
-          <div>
-            {sellOrder.price} {sellOrder.amount}
-          </div>
-        ))}
-      </div>
+      <BuyAndSellBottomButtons openOrderModal={openOrderModal} />
     </div>
-  )
-}
+  );
+};
 
-export default OrderBook
+export default OrderBook;
